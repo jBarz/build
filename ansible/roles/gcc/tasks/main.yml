@@ -1,0 +1,231 @@
+---
+
+#
+# installs java
+#
+
+- stat: path=/data/gcc-4.9/bin/gcc
+  register: build_gcc_49
+  tags: gcc49
+
+- name: Clean path
+  file:
+    state: absent
+    path: /data/tmp/
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: Create working directory
+  file:
+    path: /data/tmp
+    state: directory
+    mode: 0755
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: download gmp 6.1.0
+  get_url:
+    url: http://ftp.gnu.org/gnu/gmp/gmp-6.1.0.tar.xz
+    dest: /data/tmp/
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: unarchive gmp 6.1.0
+  unarchive:
+    src: /data/tmp/gmp-6.1.0.tar.xz
+    remote_src: yes
+    dest: /data/tmp/
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: Create build directory
+  file:
+    path: /data/tmp/build
+    state: directory
+    mode: 0755
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: build gmp
+  shell: /data/tmp/gmp-6.1.0/configure --prefix=/data/gcc-4.9
+  args:
+    chdir: /data/tmp/build
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: build gmp
+  shell: make install
+  args:
+    chdir: /data/tmp/build
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: Clean path
+  file:
+    state: absent
+    path: /data/tmp/
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: Create working directory
+  file:
+    path: /data/tmp
+    state: directory
+    mode: 0755
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: download mprf 3.1.4 
+  get_url:
+    url: http://ftp.gnu.org/gnu/mpfr/mpfr-3.1.4.tar.gz
+    dest: /data/tmp/
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: unarchive mprf 3.1.4
+  unarchive:
+    src: /data/tmp/mpfr-3.1.4.tar.gz
+    remote_src: yes
+    dest: /data/tmp/
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: Create build directory
+  file:
+    path: /data/tmp/build
+    state: directory
+    mode: 0755
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: build mprf 3.1.4
+  shell: /data/tmp/mpfr-3.1.4/configure --with-gmp=/data/gcc-4.9 --prefix=/data/gcc-4.9
+  args:
+    chdir: /data/tmp/build
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: build mprf 3.1.4
+  shell: make install
+  args:
+    chdir: /data/tmp/build
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: Clean path
+  file:
+    state: absent
+    path: /data/tmp/
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: Create working directory
+  file:
+    path: /data/tmp
+    state: directory
+    mode: 0755
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: download mpc 1.0.3
+  get_url:
+    url: http://ftp.gnu.org/gnu/mpc/mpc-1.0.3.tar.gz
+    dest: /data/tmp/
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: unarchive mpc 1.0.3
+  unarchive:
+    src: /data/tmp/mpc-1.0.3.tar.gz
+    remote_src: yes
+    dest: /data/tmp/
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: Create build directory
+  file:
+    path: /data/tmp/build
+    state: directory
+    mode: 0755
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: configure mpc 1.0.3
+  shell: /data/tmp/mpc-1.0.3/configure --with-mpfr=/data/gcc-4.9 --with-gmp=/data/gcc-4.9 --prefix=/data/gcc-4.9
+  args:
+    chdir: /data/tmp/build
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: build mpc 1.0.3
+  shell: make install
+  args:
+    chdir: /data/tmp/build
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: Clean path
+  file:
+    state: absent
+    path: /data/tmp/
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: Create working directory
+  file:
+    path: /data/tmp
+    state: directory
+    mode: 0755
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: download gcc 4.9.4
+  get_url:
+    url: http://ftp.gnu.org/gnu/gcc/gcc-4.9.4/gcc-4.9.4.tar.gz
+    dest: /data/tmp/
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: unarchive gcc 4.9.4
+  unarchive:
+    src: /data/tmp/gcc-4.9.4.tar.gz
+    remote_src: yes
+    dest: /data/tmp/
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: Create build directory
+  file:
+    path: /data/tmp/build
+    state: directory
+    mode: 0755
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: configure gcc4.9
+  shell: /data/tmp/gcc-4.9.4/configure --with-mpfr=/data/gcc-4.9 --with-gmp=/data/gcc-4.9 --prefix=/data/gcc-4.9 --disable-multilib
+  args:
+    chdir: /data/tmp/build
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: build gcc49
+  shell: make
+  args:
+    chdir: /data/tmp/build
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: install gcc49
+  shell: make install
+  args:
+    chdir: /data/tmp/build
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
+
+- name: Clean path
+  file:
+    state: absent
+    path: /data/tmp/
+  when: build_gcc_49.stat.exists == False
+  tags: gcc49
